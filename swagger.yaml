@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  title: Swagger Vapulus APIs
+  description: Vapulus Backend APIs
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000/api
+    description: local server
+
+paths:
+
+  # Users APIS
+
+  /user/getUsers:
+    get:
+      summary: Get All Users 
+      operationId: GetUsers
+      tags:
+        - User
+      responses:
+        '200':
+          description: Object contains User Data and Token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Success:
+                    type: boolean
+                  Status:
+                    type: number
+                  Message:
+                    type: string
+                  Data: 
+                    type: object
+
+
+
+  # Contacts APIS 
+
+  /contact/addContact:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Add New Contact 
+      operationId: AddContact
+      tags:
+        - Contact
+      requestBody:
+        content:
+          application/json:
+            schema:              
+              type: object
+              required:
+              - name
+              - mobileNumber
+              properties:
+                name:
+                  type: string
+                  example: ''
+                mobileNumber:
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: Object contains User Data and Token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Success:
+                    type: boolean
+                  Status:
+                    type: number
+                  Message:
+                    type: string
+                  Data: 
+                    type: object
+
+  /contact/getAllContacts:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get All Contacts
+      operationId: GetAllContacts
+      tags:
+        - Contact
+      responses:
+        '200':
+          description: Success Response Object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Status:
+                    type: boolean
+                  Message:
+                    type: string
+                  Data: 
+                    type: object
+                  
+  /contact/getRecentContacts:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get Recent Contacts
+      operationId: GetRecentContacts
+      tags:
+        - Contact
+      responses:
+        '200':
+          description: Success Response Object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Status:
+                    type: boolean
+                  Message:
+                    type: string
+                  Data: 
+                    type: object                    
+
+components:
+  securitySchemes:
+    bearerAuth:   
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
